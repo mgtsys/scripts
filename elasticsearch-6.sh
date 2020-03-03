@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #ONE LINE
-#sudo wget -Nnv 'https://github.com/mgtsys/scripts/blob/master/elasticsearch-6.sh' && bash elasticsearch-6.sh && rm -f elasticsearch-6.sh
+#sudo wget -Nnv 'https://github.com/mgtsys/scripts/blob/master/elasticsearch-6.sh' && chmod 775 elasticsearch-6.sh && bash elasticsearch-6.sh && rm -f elasticsearch-6.sh
 
 # Checking whether user has enough permission to run this script
 die()
