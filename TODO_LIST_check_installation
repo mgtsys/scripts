@@ -1,0 +1,19 @@
+SINGLE SERVER	
+
+DONE	 Distinguish between plans (basic/premium/ultimate/enterprise)
+DONE	 Check PHP fpm ports and users
+	     For each Nginx file check:
+DONE	  Check if ownership are right and set permissions 775 of the root directory
+DONE	  Check if “pub/” is in the root directory (for magento2)
+DONE	  Check if the “admin” path is the same in Magento configuration file and v-host
+DONE	  Check if the “http” is redirecting to “https”
+DONE	  Check if the alias “www1” has been configured
+DONE	  Check if Magento mode is “production”
+DONE	  Check if the redirection form www to non-www or vice versa has been set
+DONE	  Check if basic authentication is enabled
+DONE	  Check if Mysql credentials are working
+DONE	  Check if Magento cache is enabled
+DONE	  Check if Varnish is working and if the extension is uploaded
+DONE	  Check if Redis is working and if the configuration is right
+DONE	  Check if the SSL certificate is valid
+DONE	  Check if there is a test environment (if the plan is not basic)
