@@ -178,6 +178,8 @@ function check_admin_config() {
     # in env.pphp file the format is --> 'frontName' => 'admin_xk9j7q'
     # in local.xml the format is     --> <frontName><![CDATA[dashboard]]></frontName>
     ADMIN_PATH=$(sed -n "/frontName/p" ${CONFIG_FILE} | cut -d ">" -f 2 | cut -d "'" -f 2)
+    # using cli
+    # ADMIN_PATH=$(/${ROOT_DIR}/bin/magento info:adminuri | sed -n '/URI/p' | cut -d "/" -f 2)
     if [[ "${MAGENTO_VERSION}" = 1 ]]; then ADMIN_PATH=$(sed -n "/frontName/p" ${CONFIG_FILE} | cut -d "[" -f 3 | cut -d "]" -f 1); fi
     if [[ ${ADMIN_PATH} ]]; then
         # check if in vhost there is this admin path
