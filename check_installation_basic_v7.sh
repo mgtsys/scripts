@@ -335,7 +335,7 @@ function check_nginx_files() {
             enterprise)    
                 check_varnish 
                 check_redis
-                check_ssl_cert
+                check_ssl_ww1_test_cert
                 ;;
             *) ;;
         esac
