@@ -106,7 +106,6 @@ function check_ownership() {
 
 # check if in magento 2 is pointing to pub folder 
 function check_pub_folder() {
-    echo "check_pub_folder"
     # get the config magento file
     #PUB=$(sed -n "/root/p" ${FILE} | awk 'NR == 1' | cut -d "/" -f 6 | cut -d ";" -f 1)
     CONFIG_FILE=$(ls -lrt "/${APP_ETC}/app/etc/" | sed -n "/local.xml/p;/env.php/p")
@@ -136,7 +135,6 @@ function check_pub_folder() {
 
 # checks if the https redirection (from http -> https) is working. 
 function check_https_redirection() {
-    echo "check_https_redirection"
     # we take the server names from the nginx config file (as we can have more than one www1, www or without www)
     while read -r LINE; do
         # we get one of the server name
@@ -161,7 +159,6 @@ function check_https_redirection() {
 }
 
 function check_www_nonwww_redirection() {
-    echo "check_www_nonwww_redirection"
     IS_TEST=$(echo "${FILE}" | cut -d "." -f 1)
     if [[ ${IS_TEST} != *test* && ${IS_TEST} != *stage* ]]; then
         if [[ ${REDIRECTION_HTTPS} = *"www"* ]]; then PLAIN_DOMAIN=$(echo ${REDIRECTION_HTTPS} | cut -d "." -f 2-)
@@ -180,7 +177,6 @@ function check_www_nonwww_redirection() {
 
 
 function check_mysql_connection() {
-    echo "check_mysql_connection"
     MYSQL_U=$(sed -n '/<connection>/,/<\/connection>/p' ${CONFIG_FILE} | sed -n "/username/p" | cut -d "[" -f 3 | cut -d "]" -f 1)
     MYSQL_P=$(sed -n '/<connection>/,/<\/connection>/p' ${CONFIG_FILE} | sed -n "/password/p" | cut -d "[" -f 3 | cut -d "]" -f 1)
     MYSQL_DB=$(sed -n '/<connection>/,/<\/connection>/p' ${CONFIG_FILE} | sed -n "/dbname/p" | cut -d "[" -f 3 | cut -d "]" -f 1)
@@ -213,7 +209,6 @@ function check_mysql_connection() {
 }
 
 function check_secure_unsecure_url() {
-    echo "check_secure_unsecure_url"
     #web/unsecure/base_url
     # get the base_urls from the database:
     while read -r BASE_URL; do
@@ -229,7 +224,6 @@ function check_secure_unsecure_url() {
 
 
 function check_basic_auth_alias_test() {
-    echo "check_basic_auth_alias_test"
     BASIC_AUTH=$(curl --resolve ${REDIRECTION_HTTPS}:443:${PRIVATE_IP} https://${REDIRECTION_HTTPS}:443 -Ik -s 2>&1 | sed -e 's/\(.*\)/\L\1/' | sed -n "/restricted/p" | cut -d '"' -f 2)
     if [[ "${BASIC_AUTH}" != *"restricted"* ]]; then
         MESS_NGINX+="${NOT_OK}BASIC AUTH ${REDIRECTION_HTTPS} - Please enable Basic auth\n"
@@ -288,7 +282,7 @@ function check_admin_config() {
     if [[ "${MAGENTO_VERSION}" = 1 ]]; then ADMIN_PATH=$(sed -n "/frontName/p" ${CONFIG_FILE} | cut -d "[" -f 3 | cut -d "]" -f 1); fi
     if [[ ${ADMIN_PATH} ]]; then
         # check if in vhost there is this admin path
-        IS_ADMIN=$(sed -n "/"${ADMIN_PATH}"/p" ${FILE} | sed -n "/location/p")
+        IS_ADMIN=$(sed -n "/${ADMIN_PATH}/p" ${FILE} | sed -n "/location/p")
         # if the admin paht is not in the vhost -> not ok 
         if [[ -z ${IS_ADMIN} ]]; then 
             MESS_NGINX+="${NOT_OK}${REDIRECTION_HTTPS} - In ${CONFIG_FILE} admin path is ${ADMIN_PATH} and in vhost is not this one\n"
