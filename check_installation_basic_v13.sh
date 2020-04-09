@@ -75,7 +75,6 @@ function check_ownership() {
     NGINX_PORT=$(sed -n "/fastcgi_pass/p" ${FILE} | awk 'NR == 1' | cut -d ":" -f 2 | cut -d ";" -f 1)
     ROOT_DIR=$(sed -n "/root/p" ${FILE} | awk 'NR == 1' | cut -d "/" -f 2- | cut -d ";" -f 1)
     APP_ETC=$(echo ${ROOT_DIR} | sed -e 's/\/pub//')
-    echo "     ROOT DIR = /${APP_ETC}"
     if [[ ! -d "/${APP_ETC}/app/etc" ]]; then 
         MAG_INSTALLATION=false; 
         MESS_NGINX+="     Skipping file ${FILE} - not a magento installation\n"
@@ -90,14 +89,20 @@ function check_ownership() {
     else 
         for i in "${!PORTS[@]}"; do
             if [[ "${PORTS[$i]}" = "${NGINX_PORT}" ]]; then
-                echo "OWNER_FOLDER ${ROOT_DIR}"
                 OWNER_FOLDER=$(ls -lrt "/${ROOT_DIR}" | awk 'NR == 2' | cut -d " " -f 4)
                 if [[ "${OWNER_FOLDER}" != "${USERS[$i]}" ]]; then
                     MESS_PHP+="${NOT_OK}$File ${FILE} uses port ${NGINX_PORT} (user ${USERS[$i]}) and root folder's owner is ${OWNER_FOLDER}\n"
                 else
-                    MESS_PHP+="${OK}$File ${FILE}\n"
-                    echo "Setting 775 permissions /${ROOT_DIR}/"
-                    chmod -R 775 "/${ROOT_DIR}/"
+                    for i in "${!PERMISSION_SET[@]}"; do
+                        if [[ "${ROOT_DIR}" = "${PERMISSION_SET[i]}" ]]; then
+                            SET_PERM=true
+                        fi
+                    done
+                    if [[ -z  SET_PERM ]]; then 
+                        MESS_PHP+="${OK}$File ${FILE}\n"
+                        chmod -R 775 "/${ROOT_DIR}/"
+                        PERMISSION_SET+=(${ROOT_DIR})
+                    fi
                 fi
             fi
         done
@@ -381,7 +386,10 @@ function check_varnish() {
     fi
     sleep 1
     # we check if we received x-cache-age -> if varnish is working properly we should receive a number higher than 0 (the 2nd curl)
-    VARNISH=$(curl --resolve ${REDIRECTION_HTTPS}:443:${PRIVATE_IP} https://${REDIRECTION_HTTPS}:443 -Ik -s)
+    TEST_VARNISH=$(curl --resolve ${REDIRECTION_HTTPS}:443:${PRIVATE_IP} https://${REDIRECTION_HTTPS}:443 -Ik -s | sed -e 's/\(.*\)/\L\1/' | sed -n "/location/p" )
+    if [[ ! -z ${TEST_VARNISH} ]]; then 
+        REDIRECTION_HTTPS=$(echo ${TEST_VARNISH} | cut -d "/" -f 3)
+    fi 
     VARNISH=$(curl --resolve ${REDIRECTION_HTTPS}:443:${PRIVATE_IP} https://${REDIRECTION_HTTPS}:443 -Ik -s)
     VARNISH=$(curl --resolve ${REDIRECTION_HTTPS}:443:${PRIVATE_IP} https://${REDIRECTION_HTTPS}:443 -Ik -s | sed -e 's/\(.*\)/\L\1/' | sed -n "/x-cache-age/p" | cut -d " " -f 2)
     if [[ ${VARNISH} == "0"* || -z ${VARNISH} ]]; then 
@@ -435,8 +443,8 @@ function check_redis() {
             fi 
         done < <(redis-cli info | sed -n "/Keyspace/,//p" | tail -n+2)
         if [[ ${HAS_DB_SESSION} == true && ${HAS_DB_CACHE} == true ]]; then MESS_REDIS+="${OK}${REDIRECTION_HTTPS}\n"; fi
-        if [[ ${HAS_DB_SESSION} == false ]]; then MESS_REDIS+="${NOT_OK}${REDIRECTION_HTTPS} - Database for Redis SESSION is not working\n"; fi
-        if [[ ${HAS_DB_CACHE} == false ]]; then MESS_REDIS+="${NOT_OK}${REDIRECTION_HTTPS} - Database for Redis CACHE is not working\n"; fi
+        if [[ ${HAS_DB_SESSION} == false ]]; then MESS_REDIS+="${NOT_OK}${BASE_URL} - Database for Redis SESSION is not working\n"; fi
+        if [[ ${HAS_DB_CACHE} == false ]]; then MESS_REDIS+="${NOT_OK}${BASE_URL} - Database for Redis CACHE is not working\n"; fi
     fi
 }
 
@@ -510,7 +518,6 @@ function check_nginx_files() {
         if [[ "${FILE}" = *"conf." ]]; then continue; fi
         MESS_NGINX+="\n   * \033[1mNGINX file ${FILE}\033[0m\n"
         global
-        echo "after global"
         if [[ ${MAG_INSTALLATION} == false ]]; then continue; fi
         case ${PLAN} in
             ultimate)   
