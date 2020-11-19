@@ -62,13 +62,12 @@ if [ ! -d ../pub ]; then
    cd ../
    if [[ ! $MOUNTED_NFS ]]; then
       mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/;
-      ln -s ../../../shared/media media
    else
       mkdir -p /data/$DOMAIN_ROOT_DIR;
       mv media /data/$DOMAIN_ROOT_DIR/;
       ln -s /data/$DOMAIN_ROOT_DIR/media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/media;
    fi
-
+   ln -s ../../../shared/media media
    exit 0
 
 fi
@@ -77,12 +76,13 @@ cd ../pub;
 
 if [[ ! $MOUNTED_NFS ]]; then
    mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/;
-   ln -s ../../../shared/pub/media media
 else
    mkdir -p /data/$DOMAIN_ROOT_DIR/pub;
    mv media /data/$DOMAIN_ROOT_DIR/pub/;
    ln -s /data/$DOMAIN_ROOT_DIR/pub/media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/media;
 fi
+
+ln -s ../../../shared/pub/media media
 
 
 if [ -d static/ ]; then
