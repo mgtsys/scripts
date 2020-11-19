@@ -1,5 +1,5 @@
 #!/bin/bash
-#Ver 1.0.0
+#Ver 1.0.1
 
 if [[ $# -eq 0 ]] ; then
     echo 'You should put the domain root directory'
