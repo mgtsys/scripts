@@ -25,7 +25,13 @@ cd shared;
 mkdir var pub;
 mkdir -p pub/static;
 
-cd ../current/var;
+##Working with VAR dir
+if [ -d ../current/var ]; then
+   cd ../current/var;
+else
+   mkdir -p ../current/var;
+   cd ../current/var;
+fi
 
 if [ -d report ]; then
    mv report /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/var/;
@@ -43,7 +49,7 @@ fi
 
 ln -s ../../../shared/var/log log;
 
-
+###Working with PUB directory if is exist
 if [ ! -d ../pub ]; then
 
    echo "Magento 1";
@@ -53,7 +59,6 @@ if [ ! -d ../pub ]; then
    exit 0
    
 fi
-
 
 cd ../pub;
 mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/;
