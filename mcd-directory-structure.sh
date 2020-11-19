@@ -1,5 +1,5 @@
 #!/bin/bash
-#Ver 1.0.1
+#Ver 1.0.2
 
 if [[ $# -eq 0 ]] ; then
     echo 'You should put the domain root directory'
@@ -7,11 +7,17 @@ if [[ $# -eq 0 ]] ; then
 fi
 
 DOMAIN_ROOT_DIR=$1;
+MOUNTED_NFS=$(mount -l -t nfs4)
 
 cd /home/cloudpanel/htdocs;
 
 if [ ! -d $DOMAIN_ROOT_DIR ]; then
    echo "Directory does not exist";
+   exit 0
+fi
+
+if [ -d $DOMAIN_ROOT_DIR/releases ]; then
+   echo "Directory MCD Structure already exist";
    exit 0
 fi
 
@@ -54,15 +60,29 @@ if [ ! -d ../pub ]; then
 
    echo "Magento 1";
    cd ../
-   mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/;
-   ln -s ../../../shared/media media
+   if [[ ! $MOUNTED_NFS ]]; then
+      mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/;
+      ln -s ../../../shared/media media
+   else
+      mkdir -p /data/$DOMAIN_ROOT_DIR;
+      mv media /data/$DOMAIN_ROOT_DIR/;
+      ln -s /data/$DOMAIN_ROOT_DIR/media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/media;
+   fi
+
    exit 0
-   
+
 fi
 
 cd ../pub;
-mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/;
-ln -s ../../../shared/pub/media media
+
+if [[ ! $MOUNTED_NFS ]]; then
+   mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/;
+   ln -s ../../../shared/pub/media media
+else
+   mkdir -p /data/$DOMAIN_ROOT_DIR/pub;
+   mv media /data/$DOMAIN_ROOT_DIR/pub/;
+   ln -s /data/$DOMAIN_ROOT_DIR/pub/media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/media;
+fi
 
 
 if [ -d static/ ]; then
@@ -76,6 +96,12 @@ if [ -d _cache ]; then
    mv _cache /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/static/_cache;
 else
    mkdir -p /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/static/_cache;
+fi
+
+if [[ $MOUNTED_NFS ]]; then
+   mkdir -p /data/$DOMAIN_ROOT_DIR/pub/static;
+   mv /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/static/_cache /data/$DOMAIN_ROOT_DIR/pub/static/;
+   ln -s /data/$DOMAIN_ROOT_DIR/pub/static/_cache /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/static/_cache;
 fi
 
 ln -s ../../../../shared/pub/static/_cache _cache
