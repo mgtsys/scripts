@@ -1,8 +1,6 @@
 #!/bin/bash
 #Ver 1.0.2
 
-DOMAIN_ROOT_DIR='PROJECT_DOMAIN'
-
 if [[ $# -eq 0 ]]; then
   echo 'You should put the domain root directory'
   exit 0
