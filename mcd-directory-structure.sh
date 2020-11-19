@@ -64,7 +64,13 @@ cd ../pub;
 mv media /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/;
 ln -s ../../../shared/pub/media media
 
-cd static/
+
+if [ -d static/ ]; then
+   cd static/;
+else
+   mkdir -p static;
+   cd static/;
+fi
 
 if [ -d _cache ]; then
    mv _cache /home/cloudpanel/htdocs/$DOMAIN_ROOT_DIR/shared/pub/static/_cache;
