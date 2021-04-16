@@ -2,7 +2,7 @@
 #Ver 1.0.2
 
 if [[ $# -eq 0 ]]; then
-  echo 'You should put the domain root directory'
+  echo 'You should put the domain root directory name only'
   exit 0
 fi
 
