@@ -14,7 +14,7 @@ if [ "$INSTANCE_ID" != "$WEBMASTER_INSTANCE_ID" ]; then
       if [ "$CURRENT_SYMLINK" != "$ADMIN_CURRENT_SYMLINK" ] || [ ! -d $CURRENT_SYMLINK ]; then
         rsync --delete --owner --group --exclude '/shared'  -lave "ssh -i /root/.ssh/sync_files" root@$ADMIN_INSTANCE_IP:$DOCUMENT_ROOT/ $DOCUMENT_ROOT/
         su -c "ln -sfn $ADMIN_CURRENT_SYMLINK $DOCUMENT_ROOT/current" $FILE_OWNER
-        LOG_MESSAGE="$NOW - current symlink: '$CURRENT_SYMLINK' is not equal with admin server: '$ADMIN_CURRENT_SYMLINK' - rsync from admin OR the first one does not exist "
+        LOG_MESSAGE="$NOW - current symlink: '$CURRENT_SYMLINK' is not equal with admin server OR does not exist: '$ADMIN_CURRENT_SYMLINK' - rsync from admin"
         echo $LOG_MESSAGE >> /root/scripts/check_and_fix_current_symlink.log
         /etc/init.d/php7.4-fpm reload
       else
