@@ -135,7 +135,7 @@ function install {
 	fi
     	if [ "$php_ver" = "7.4" ]
 	then
-		echo "Cleaning up files"
+		echo -e "\nCleaning up files"
 		rm -rf newrelic-php74-agent-arm newrelic-php74-agent-arm.tar.gz
     		echo -e "\e[0;32mDONE!!!!\e[0m"
 		#killall newrelic-daemon	
