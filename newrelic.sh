@@ -141,7 +141,7 @@ function install {
 		#killall newrelic-daemon	
 	elif [ "$php_ver" = "7.3" ]
 	then
-		echo "Cleaning up files"
+		echo -e "\nCleaning up files"
 		rm -rf newrelic-php73-agent-arm newrelic-php73-agent-arm.tar.gz
     		echo -e "\e[0;32mDONE!!!!\e[0m"
 		killall newrelic-daemon
