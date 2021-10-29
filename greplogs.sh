@@ -157,7 +157,7 @@ fi
 ##Validate the Extracted Ips to the Abuse IPs Database
 Abuse_IPs() {
 
-##Strip HIT cout and IP address
+##Strip HIT count and IP address
 for k in ${IP[@]}; do
    if [[ "${#k}" -le "2" ]];then
 IPHitCount=$k
