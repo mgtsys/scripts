@@ -3,40 +3,35 @@
 #
 #
 
-##To Check default PHP version
-php=$(php --version | cut -d " " -f2 | head -1 | cut -d "." -f1,2)
-
+PHP_VERSION=$(php --version | cut -d " " -f2 | head -1 | cut -d "." -f1,2)
+SERVICES_TO_CHECK=("nginx" "mysql" "php$PHP_VERSION-fpm" "varnish" "cron" "redis" "elasticsearch")
 
 ServicesCheck(){
 
-##Verify the Services are in Enabled state
-checkIfserviceIsenabled(){
-services=("$1" "$2" "$3$php-fpm" "$4" "$5")
+checkIfServiceIsEnabled(){
 
-for services in ${services[@]};do
+for service in ${SERVICES_TO_CHECK[@]};do
 
-if ! systemctl is-enabled $services >/dev/null;then
- echo -ne "\e[31m $services is in disabled state \e[00m\n"
+if ! systemctl is-enabled --quiet $service >/dev/null;then
+ echo -ne "\e[31m $service is in disabled state \e[00m\n"
 fi
 
 done
 }
 
-##Verify if the Services are in the Running State
-checkIfserviceIsrunning(){
-services=("$1" "$2" "$3$php" "$4" "$5")
+checkIfServiceIsRunning(){
 
-for services in ${services[@]}; do
+for service in ${SERVICES_TO_CHECK[@]};do
 
-if  ! pgrep -x $services >/dev/null;then
-  echo -ne "\e[31m $services is in stopped state\e[00m\n"
+if ! systemctl is-active --quiet $service >/dev/null;then
+ echo -ne "\e[31m $service is in stopped state \e[00m\n"
 fi
 
 done
 }
 
-checkIfserviceIsenabled nginx mysql php varnish cron
-checkIfserviceIsrunning nginx mysqld php-fpm varnishd cron
+checkIfServiceIsEnabled
+checkIfServiceIsRunning
 }
 
 ##Establish the Run Order
@@ -45,4 +40,3 @@ ServicesCheck
 }
 
 Main
-
