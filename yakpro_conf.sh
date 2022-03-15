@@ -41,7 +41,7 @@ then
                         sed -i '105, 113 s/^/#/' /usr/local/yakpro-po/include/classes/config.php
                 fi
                	num=1
-		echo "\nEnter the files or directories that needs to be excluded: "
+		echo -e "\nEnter the files or directories that needs to be excluded: "
 		exclude=()
 		while IFS= read -r -p "Item $num (end with an empty line): " line;
 		do
