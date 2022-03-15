@@ -21,6 +21,7 @@ then
                         then
                                 sed -i 86s%"'.*';"%"'$path';"% $YAK_CONF; sed -i 86s%"null;"%"'$path';"% $YAK_CONF
                         else
+                                echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
                                 continue
                         fi
                         echo -n "Enter the Output path for your obfuscated code(Path must be absolute): "
@@ -29,6 +30,7 @@ then
                         then
                                 sed -i 87s%"'.*';"%"'$path2';"% $YAK_CONF; sed -i 87s%"null;"%"'$path2';"% $YAK_CONF
                         else
+                                echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
                                 continue
                         fi
                         break
