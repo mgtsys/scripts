@@ -21,7 +21,7 @@ then
                         then
                                 sed -i 86s%"'.*';"%"'$path';"% $YAK_CONF; sed -i 86s%"null;"%"'$path';"% $YAK_CONF
                         else
-                                echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
+				echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
                                 continue
                         fi
                         echo -n "Enter the Output path for your obfuscated code(Path must be absolute): "
@@ -30,7 +30,7 @@ then
                         then
                                 sed -i 87s%"'.*';"%"'$path2';"% $YAK_CONF; sed -i 87s%"null;"%"'$path2';"% $YAK_CONF
                         else
-                                echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
+				echo -e "\e[0;33mPress 'Ctrl-C' to exit the script, or enter the correct path.\e[0m"
                                 continue
                         fi
                         break
@@ -40,8 +40,23 @@ then
                 then
                         sed -i '105, 113 s/^/#/' /usr/local/yakpro-po/include/classes/config.php
                 fi
-                echo -e "\e[0;32mConfiguration file has been modified.\e[0m"
-        fi
+               	num=1
+		echo "\nEnter the files or directories that needs to be excluded: "
+		exclude=()
+		while IFS= read -r -p "Item $num (end with an empty line): " line;
+		do
+			[[ $line ]] || break
+			exclude+=("'$line',")
+			num=$((num+1))
+		done
+		if [[ ${#exclude[0]} != 0 ]];
+		then
+			sed -i "89s%\(null;\|array(.*);\)%array(${exclude[*]});%" $YAK_CONF
+		else
+			sed -i "89s%\(null;\|array(.*);\)%null;%" $YAK_CONF
+		fi
+		echo -e "\e[0;32mYakpro configuration has been modified.\e[0m"
+	fi
 else
         git clone https://github.com/pk-fr/yakpro-po.git $INSTALL_DIR
         cd $INSTALL_DIR
