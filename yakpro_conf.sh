@@ -33,7 +33,12 @@ then
                         fi
                         break
                 done
-                sed -i '105, 113 s/^/#/' /usr/local/yakpro-po/include/classes/config.php
+                conf_comment=$(grep '^#' /usr/local/yakpro-po/include/classes/config.php)
+                if [[ -z $conf_comment ]]
+                then
+                        sed -i '105, 113 s/^/#/' /usr/local/yakpro-po/include/classes/config.php
+                fi
+                echo -e "\e[0;32mConfiguration file has been modified.\e[0m"
         fi
 else
         git clone https://github.com/pk-fr/yakpro-po.git $INSTALL_DIR
