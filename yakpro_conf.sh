@@ -15,7 +15,7 @@ then
                 sed -i 68s/true/false/ $YAK_CONF
                 while true;
                 do
-                        echo -n "Enter the Source path of your module/code(Path must be absolute): "
+                        echo -n "\nEnter the Source path of your module/code(Path must be absolute): "
                         read path
                         if [[ -n $path ]];
                         then
