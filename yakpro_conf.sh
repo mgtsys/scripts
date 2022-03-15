@@ -15,19 +15,19 @@ then
                 sed -i 68s/true/false/ $YAK_CONF
                 while true;
                 do
-                        echo "Enter the Source path of your module/code(Path must be absolute): "
+                        echo -n "Enter the Source path of your module/code(Path must be absolute): "
                         read path
                         if [[ -n $path ]];
                         then
-                                sed -i 86s+"'.*'"+"'$path'"+ $YAK_CONF
+                                sed -i 86s%"'.*';"%"'$path';"% $YAK_CONF; sed -i 86s%"null;"%"'$path';"% $YAK_CONF
                         else
                                 continue
                         fi
-                        echo "Enter the Output path for your obfuscated code(Path must be absolute): "
+                        echo -n "Enter the Output path for your obfuscated code(Path must be absolute): "
                         read path2
                         if [[ -n $path2 ]]
                         then
-                                sed -i 87s+null+"'$path2'"+ $YAK_CONF
+                                sed -i 87s%"'.*';"%"'$path2';"% $YAK_CONF; sed -i 87s%"null;"%"'$path2';"% $YAK_CONF
                         else
                                 continue
                         fi
