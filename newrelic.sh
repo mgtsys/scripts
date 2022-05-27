@@ -45,27 +45,27 @@ function fetch {
         if [ "$php_ver" = "7.1" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.1"
-            wget https://www.dropbox.com/s/6kcocvecg8e5o0t/newrelic-php71-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/647jv9pw23vvqg7/newrelic-php71-agent-arm.tar.gz &> /dev/null &&
             php71=$wdir/newrelic-php71-agent-arm.tar.gz
         elif [ "$php_ver" = "7.2" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.2"
-            wget https://www.dropbox.com/s/1v9wjpt4lflrxsh/newrelic-php72-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/8ur861vrhpz7fjo/newrelic-php72-agent-arm.tar.gz &> /dev/null &&
             php72=$wdir/newrelic-php72-agent-arm.tar.gz
         elif [ "$php_ver" = "7.3" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.3"
-            wget https://www.dropbox.com/s/nir5sxsm767g8lh/newrelic-php73-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/tpv880arnhkjihp/newrelic-php73-agent-arm.tar.gz &> /dev/null &&
             php73=$wdir/newrelic-php73-agent-arm.tar.gz
         elif [ "$php_ver" = "7.4" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.4"
-            wget https://www.dropbox.com/s/y6vq0k4ofcx9yus/newrelic-php74-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/ltvkbqcv39ye78l/newrelic-php74-agent-arm.tar.gz &> /dev/null &&
             php74=$wdir/newrelic-php74-agent-arm.tar.gz
         elif [ "$php_ver" = "8.0" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 8.0"
-            wget https://www.dropbox.com/s/gkto04e66f3qqpa/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/07hys92edhmkrkc/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
             php80=$wdir/newrelic-php80-agent-arm.tar.gz
         fi
     elif [ $kern_inst = "5.10.0" ]
@@ -79,32 +79,32 @@ function fetch {
         if [ "$php_ver" = "7.1" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.1"
-            wget https://www.dropbox.com/s/2jov7vpgmcyx8j7/newrelic-php71-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/uu39zq7txzq91ei/newrelic-php71-agent-arm.tar.gz &> /dev/null &&
             php71=$wdir/newrelic-php71-agent-arm.tar.gz
         elif [ "$php_ver" = "7.2" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.2"
-            wget https://www.dropbox.com/s/9ii8fc7c8d2ep0v/newrelic-php72-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/m4vpojcyp3bumr7/newrelic-php72-agent-arm.tar.gz &> /dev/null &&
             php72=$wdir/newrelic-php72-agent-arm.tar.gz
         elif [ "$php_ver" = "7.3" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.3"
-            wget https://www.dropbox.com/s/j1f1b4vxm0a7lif/newrelic-php73-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/hsictbo55edlx0o/newrelic-php73-agent-arm.tar.gz &> /dev/null &&
             php73=$wdir/newrelic-php73-agent-arm.tar.gz
         elif [ "$php_ver" = "7.4" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.4"
-            wget https://www.dropbox.com/s/kpzu9jyrbyhv42s/newrelic-php74-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/ts7w3uiwritkqv8/newrelic-php74-agent-arm.tar.gz &> /dev/null &&
             php74=$wdir/newrelic-php74-agent-arm.tar.gz
         elif [ "$php_ver" = "8.0" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 8.0"
-            wget https://www.dropbox.com/s/2qpew7rpov50spk/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/bcf1eg7mp4ad1zt/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
             php80=$wdir/newrelic-php80-agent-arm.tar.gz
         elif [ "$php_ver" = "8.1" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 8.1"
-            wget https://www.dropbox.com/s/k9prc8mdcjxoxem/newrelic-php81-agent-arm.tar.gz &> /dev/null &&
+            wget https://www.dropbox.com/s/x227ul6rzr38wh8/newrelic-php81-agent-arm.tar.gz &> /dev/null &&
             php81=$wdir/newrelic-php81-agent-arm.tar.gz
         fi
     else
