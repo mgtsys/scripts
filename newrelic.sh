@@ -156,7 +156,7 @@ function extract {
 }
 
 function install {
-    if [ "$php_ver" == "7.1" ] || [ "$php_ver" == "7.2" ] || [ "$php_ver" == "7.3" ] || [ "$php_ver" == "7.4" ] || [ "$php_ver" == "8.0" ] || [ "$php_ver" == "8.1" ] ]
+    if [ "$php_ver" == "7.1" ] || [ "$php_ver" == "7.2" ] || [ "$php_ver" == "7.3" ] || [ "$php_ver" == "7.4" ] || [ "$php_ver" == "8.0" ] || [ "$php_ver" == "8.1" ]
     then
         echo -e "\n\e[0;32mValid PHP Version\e[0m"
     else
