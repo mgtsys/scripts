@@ -68,7 +68,6 @@ function fetch {
             echo -e "\nFetching New Relic php agent for PHP 8.0"
             wget https://www.dropbox.com/s/07hys92edhmkrkc/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
             php80=$wdir/newrelic-php80-agent-arm.tar.gz
-        fi
         elif [ "$php_ver" = "8.1" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 8.1"
