@@ -42,6 +42,7 @@ function fetch {
         newrelic_php73=$(php7.3 -m | grep newrelic)
         newrelic_php74=$(php7.4 -m | grep newrelic)
         newrelic_php80=$(php8.0 -m | grep newrelic)
+        newrelic_php81=$(php8.1 -m | grep newrelic)
         if [ "$php_ver" = "7.1" ]
         then
             echo -e "\nFetching New Relic php agent for PHP 7.1"
@@ -67,6 +68,12 @@ function fetch {
             echo -e "\nFetching New Relic php agent for PHP 8.0"
             wget https://www.dropbox.com/s/07hys92edhmkrkc/newrelic-php80-agent-arm.tar.gz &> /dev/null &&
             php80=$wdir/newrelic-php80-agent-arm.tar.gz
+        fi
+        elif [ "$php_ver" = "8.1" ]
+        then
+            echo -e "\nFetching New Relic php agent for PHP 8.1"
+            wget https://www.dropbox.com/s/x227ul6rzr38wh8/newrelic-php81-agent-arm.tar.gz &> /dev/null &&
+            php81=$wdir/newrelic-php81-agent-arm.tar.gz
         fi
     elif [ $kern_inst = "5.10.0" ]
     then
