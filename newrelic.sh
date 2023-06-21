@@ -452,6 +452,19 @@ then
 elif [[ $install == true && -f /usr/bin/newrelic-daemon ]]
 then
     echo -e "\e[0;32mNewrelic Exists\e[0m"
+    if php7.1 -m | grep -q relic; then
+      echo "Relic is installed for PHP7.1"
+    elif php7.2 -m | grep -q relic; then
+      echo "Relic is installed for PHP7.2"
+    elif php7.3 -m | grep -q relic; then
+      echo "Relic is installed for PHP7.3"
+    elif php7.4 -m | grep -q relic; then
+      echo "Relic is installed for PHP7.4"
+    elif php8.0 -m | grep -q relic; then
+      echo "Relic is installed for PHP8.0"
+    elif php8.1 -m | grep -q relic; then
+      echo "Relic is installed for PHP8.1"
+    fi
 else
     echo "Usage: cmd [-i] to install [-u] to uninstall"
 fi
